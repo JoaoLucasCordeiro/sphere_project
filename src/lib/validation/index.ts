@@ -6,3 +6,8 @@ export const SignupValidation = z.object({
     email: z.string().email(),
     password: z.string().min(8, {message: "A Senha Deve Possuir Pelo Menos 8 Caracteres"}),
   })
+
+  export const SigninValidation = z.object({
+    email: z.string().email(),
+    password: z.string().min(8, {message: "A Senha Deve Possuir Pelo Menos 8 Caracteres"}),
+  })

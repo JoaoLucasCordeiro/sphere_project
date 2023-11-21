@@ -24,8 +24,9 @@ const SignupForm = () => {
   const { toast } = useToast();
   const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
   const navigate = useNavigate();
-  const { mutateAsync: createUserAccount, isLoading: isCreatingUser } = useCreateUserAccount();
-  const { mutateAsync: signInAccount, isLoading: isSigningIn } = useSignInAccount
+
+  const { mutateAsync: createUserAccount, isPending: isCreatingAccount } = useCreateUserAccount();
+  const { mutateAsync: signInAccount, isPending: isSigningIn } = useSignInAccount();
 
   const form = useForm<z.infer<typeof SignupValidation>>({
     resolver: zodResolver(SignupValidation),
@@ -79,7 +80,7 @@ const SignupForm = () => {
         <h2 className="h3-bold md:h2-bold pt-5 sm:pt-12">
           Criar uma nova conta
         </h2>
-        <p className="text-light-3 small-medium md:base-regular mt-2">Entre com os seus dados para usar o Sphere.</p>
+        <p className="text-light-3 small-medium md:base-regular mt-2 text-center">Preencha com os seus dados para registrar-se no Sphere.</p>
 
         <form onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-5 w-full mt-4">
@@ -147,13 +148,13 @@ const SignupForm = () => {
             type="submit"
             className="shad-button_primary"
           >
-            {isCreatingUser ? (
+            {isCreatingAccount ? (
               <div className="flex-center gap-2">
                 <Loader />
                 Carregando...
               </div>
             ) : (
-              "Entrar"
+              "Criar Conta"
             )}
           </Button>
           <p className="text-small-regular text-light-2 text-center mt-2">
