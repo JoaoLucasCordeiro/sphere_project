@@ -13,31 +13,50 @@ import {
 import { Input } from "@/components/ui/input"
 import { Textarea } from "../ui/textarea"
 import FileUploader from "../shared/FileUploader"
-
-const formSchema = z.object({
-    username: z.string().min(2, {
-        message: "Username must be at least 2 characters.",
-    }),
-})
-
-
-// 2. Define a submit handler.
-function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
-}
+import { PostValidation } from "@/lib/validation"
+import { Models } from "appwrite"
+import { useUserContext } from "@/context/AuthContext"
+import { toast } from "../ui/use-toast"
+import { useNavigate } from "react-router-dom"
+import { useCreatePost } from "@/lib/react-query/queriesAndMutations"
 
 
-const PostForm = ({ post }) => {
+type PostFormProps = {
+    post?: Models.Document;
+    action: "Create" | "Update";
+};
 
-    // 1. Define your form.
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+const PostForm = ({ post }: PostFormProps) => {
+
+    const { mutateAsync: createPost, isPending: isLoadingCreate } = useCreatePost();
+    const { user } = useUserContext();
+    const navigate = useNavigate();
+
+    const form = useForm<z.infer<typeof PostValidation>>({
+        resolver: zodResolver(PostValidation),
         defaultValues: {
-            username: "",
+            caption: post ? post?.caption : "",
+            file: [],
+            location: post ? post?.location : "",
+            tags: post ? post.tags.join(',') : "",
         },
     })
+
+    async function onSubmit(values: z.infer<typeof PostValidation>) {
+        const newPost = await createPost({
+            ...values,
+            userId: user.id
+        })
+
+        if(!newPost) {
+            toast({
+                title: 'Por favor, tente novamente!'
+            })
+        }
+
+        navigate('/');
+    }
+
 
     return (
         <Form {...form}>
@@ -87,7 +106,7 @@ const PostForm = ({ post }) => {
                         <FormItem>
                             <FormLabel className="shad-form_label">Adicone sua localização</FormLabel>
                             <FormControl>
-                                <Input type="text" className="shad-input" placeholder="Biblioteca" />
+                                <Input type="text" className="shad-input" placeholder="Biblioteca" {...field} />
                             </FormControl>
 
                             <FormMessage className="shad-form_message" />
@@ -102,7 +121,7 @@ const PostForm = ({ post }) => {
                         <FormItem>
                             <FormLabel className="shad-form_label">Adicone hashtags (com vírgulas "," entre cada uma)</FormLabel>
                             <FormControl>
-                                <Input type="text" className="shad-input" placeholder="Aula, Novidade, Estágio" />
+                                <Input type="text" className="shad-input" placeholder="Aula, Novidade, Estágio" {...field} />
                             </FormControl>
 
                             <FormMessage className="shad-form_message" />
