@@ -6,22 +6,23 @@ import { useGetPostById } from "@/lib/react-query/queriesAndMutations"
 import { multiFormatDateString } from "@/lib/utils"
 import { Link, useParams } from "react-router-dom"
 
+
 const PostDetails = () => {
-  const { id } = useParams()
+
+  const { id } = useParams();
+  const { data: post, isPending } = useGetPostById(id || '');
   const { user } = useUserContext();
-  const { data: post, IsPending } = useGetPostById(id || '')
 
   const handleDeletePost = () => {
-    // deletePost({ postId: id, imageId: post?.imageId });
-    // navigate(-1);
+    console.log("Post deletado")
   }
-
   return (
     <div className="post_details-container">
-      {IsPending ? <Loader /> : (
+      {isPending ? <Loader /> : (
         <div className="post_details-card">
 
           <img src={post?.imageUrl} alt="creator" className="post_details-img" />
+
 
           <div className="post_details-info">
 
@@ -33,9 +34,8 @@ const PostDetails = () => {
                     "/assets/icons/profile-placeholder.svg"
                   }
                   alt="creator"
-                  className="w-8 h-8 lg:h-12 lg:w-12 rounded-full"
+                  className="w-8 h-8 lg:w-12 lg:h-12 rounded-full"
                 />
-
 
                 <div className="flex flex-col">
                   <p className="base-medium lg:body-bold text-light-1">
@@ -53,36 +53,23 @@ const PostDetails = () => {
                 </div>
               </Link>
 
-              <div className="flex-center">
 
-                <Link
-                  to={`/update-post/${post?.$id}`}
-                  className={`${user.id !== post?.creator.$id && "hidden"}`}>
-                  <img
-                    src={"/assets/icons/edit.svg"}
-                    alt="edit"
-                    width={24}
-                    height={24}
-                  />
+              <div className="flex-center">
+                <Link to={`/update-post/${post?.$id}`} className={`${user.id !== post?.creator.$id && "hidden"}`}>
+                  <img src="/assets/icons/edit.svg" alt="edit" width={24} height={24} />
                 </Link>
 
                 <Button
                   onClick={handleDeletePost}
                   variant="ghost"
-                  className={`ost_details-delete_btn ${user.id !== post?.creator.$id && "hidden"
-                    }`}>
-                  <img
-                    src={"/assets/icons/delete.svg"}
-                    alt="delete"
-                    width={24}
-                    height={24}
-                  />
+                  className={`ghost_details-delete_btn ${user.id !== post?.creator.$id && "hidden"}`}
+                >
+                  <img src="/assets/icons/delete.svg" alt="delete" width={24} height={24} />
                 </Button>
               </div>
             </div>
 
             <hr className="border w-full border-dark-4/80" />
-
 
             <div className="flex flex-col flex-1 w-full small-medium lg:base-regular">
               <p>{post?.caption}</p>
@@ -95,12 +82,12 @@ const PostDetails = () => {
               </ul>
             </div>
 
-
             <div className="w-full">
-              <PostStats  post={post} userId={user.id}/>
+              <PostStats post={post} userId={user.id}/>
             </div>
 
           </div>
+
         </div>
       )}
     </div>
