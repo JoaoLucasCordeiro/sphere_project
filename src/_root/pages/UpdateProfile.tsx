@@ -89,7 +89,7 @@ const UpdateProfile = () => {
             alt="edit"
             className="invert-white"
           />
-          <h2 className="h3-bold md:h2-bold text-left w-full">Edit Profile</h2>
+          <h2 className="h3-bold md:h2-bold text-left w-full">Editar Perfil</h2>
         </div>
 
         <Form {...form}>
@@ -186,14 +186,14 @@ const UpdateProfile = () => {
                 type="button"
                 className="shad-button_dark_4"
                 onClick={() => navigate(-1)}>
-                Cancel
+                Cancelar
               </Button>
               <Button
                 type="submit"
                 className="shad-button_primary whitespace-nowrap"
                 disabled={isLoadingUpdate}>
                 {isLoadingUpdate && <Loader />}
-                Update Profile
+                Salvar
               </Button>
             </div>
           </form>
