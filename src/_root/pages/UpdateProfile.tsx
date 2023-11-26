@@ -13,15 +13,15 @@ import {
 } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
 
-import { useUserContext } from "@/context/AuthContext";
 
-import Loader from "@/components/shared/Loader";
+import { ProfileValidation } from "@/lib/validation";
+import { useUserContext } from "@/context/AuthContext";
+import { useGetUserById, useUpdateUser } from "@/lib/react-query/queriesAndMutations";
+import ProfileUploader from "@/components/shared/ProfileUploader";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { ProfileValidation } from "@/lib/validation";
-import { useGetUserById, useUpdateUser } from "@/lib/react-query/queriesAndMutations";
-import ProfileUploader from "@/components/shared/ProfileUploader";
+import Loader from "@/components/shared/Loader";
 
 
 const UpdateProfile = () => {
@@ -42,7 +42,7 @@ const UpdateProfile = () => {
 
   // Queries
   const { data: currentUser } = useGetUserById(id || "");
-  const { mutateAsync: updateUser, isLoading: isLoadingUpdate } =
+  const { mutateAsync: updateUser, isPending: isLoadingUpdate } =
     useUpdateUser();
 
   if (!currentUser)
@@ -89,7 +89,7 @@ const UpdateProfile = () => {
             alt="edit"
             className="invert-white"
           />
-          <h2 className="h3-bold md:h2-bold text-left w-full">Editar Perfil</h2>
+          <h2 className="h3-bold md:h2-bold text-left w-full">Edit Profile</h2>
         </div>
 
         <Form {...form}>
