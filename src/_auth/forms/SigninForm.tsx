@@ -25,7 +25,7 @@ const SigninForm = () => {
   const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
   const navigate = useNavigate();
 
-  const { mutateAsync: signInAccount} = useSignInAccount()
+  const { mutateAsync: signInAccount } = useSignInAccount()
 
   const form = useForm<z.infer<typeof SigninValidation>>({
     resolver: zodResolver(SigninValidation),
@@ -65,7 +65,12 @@ const SigninForm = () => {
     <Form {...form}>
 
       <div className="sm:w-420 flex-center flex-col">
-        <img src="/assets/images/logo.svg" alt="Logo" width={210} height={150} />
+
+        <div className="flex items-center gap-2">
+          <img src="/assets/images/logo.png" alt="Logo" width={100} height={100} />
+          <h1 className="text-5xl font-bold">Sphere</h1>
+        </div>
+
 
         <h2 className="h3-bold md:h2-bold pt-5 sm:pt-12">
           Entre na sua conta
@@ -73,7 +78,7 @@ const SigninForm = () => {
         <p className="text-light-3 small-medium md:base-regular mt-2 text-center">Bem vindo de volta ao Sphere! Preencha com os seus dados.</p>
 
         <form onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-5 w-full mt-4">
+          className="flex flex-col gap-5 w-full mt-4 p-3">
 
           <FormField
             control={form.control}
@@ -82,7 +87,7 @@ const SigninForm = () => {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input type="text" className="shad-input" {...field} />
+                  <Input type="text" className="shad-input" {...field}/>
                 </FormControl>
 
                 <FormMessage />

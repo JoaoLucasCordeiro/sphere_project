@@ -21,13 +21,11 @@ const LeftsideBar = () => {
   return (
     <nav className='leftsidebar'>
       <div className='flex flex-col gap-11'>
-        <Link to="/" className="flex gap-3 items-center">
-          <img
-            src="/assets/images/logo.svg"
-            alt="logo"
-            width={145}
-            height={36}
-          />
+        <Link to="/" className="flex gap-3 items-center mb-8">
+          <div className="flex items-center gap-2">
+            <img src="/assets/images/logo.png" alt="Logo" width={50} height={50} />
+            <h1 className="text-2xl font-bold">Sphere</h1>
+          </div>
         </Link>
 
         <Link to={`/profile/${user.id}`} className='flex gap-3 items-center'>
