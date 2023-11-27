@@ -1,6 +1,8 @@
 # Sphere - Rede Social para Estudantes
 
-![Sphere Logo](link_para_logo.png)
+
+![logo](https://github.com/JoaoLucasCordeiro/sphere_project/assets/89361241/45a359e0-aa03-453e-b8c7-633ba59abc5d)
+
 
 Sphere é uma aplicação web desenvolvida em React e TypeScript, criada para proporcionar uma experiência de rede social exclusiva para estudantes. Com recursos como autenticação de usuário, postagem de fotos, interação com posts, edição de perfil e muito mais, o Sphere visa conectar estudantes de forma significativa.
 
